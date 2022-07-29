@@ -1,0 +1,13 @@
+commerce_maib.checkout_return:
+  path: '/commerce-maib/return'
+  defaults:
+    _controller: '\Drupal\commerce_maib\Controller\PaymentCheckoutController::returnPage'
+  requirements:
+    _custom_access: '\Drupal\commerce_maib\Controller\PaymentCheckoutController::checkAccess'
+
+commerce_maib.checkout_cancel:
+  path: '/commerce-maib/cancel'
+  defaults:
+    _controller: '\Drupal\commerce_maib\Controller\PaymentCheckoutController::cancelPage'
+  requirements:
+    _custom_access: '\Drupal\commerce_maib\Controller\PaymentCheckoutController::checkAccess'

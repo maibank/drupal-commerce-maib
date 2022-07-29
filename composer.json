@@ -1,0 +1,39 @@
+{
+    "name": "commerce/maib",
+    "type": "drupal-module",
+    "description": "Provides Commerce integration for MAIB",
+    "keywords": ["Drupal","Commerce","Payment","MAIB"],
+    "homepage": "http://drupal.org/project/commerce_maib",
+    "authors": [
+        {
+          "name": "Adrian Golub",
+          "homepage": "https://drupal.org/u/sivakarthik229",
+          "role": "Maintainer"
+        },
+        {
+          "name": "Dumitru Scutaru",
+          "homepage": "https://drupal.org/u/wangshy",
+          "role": "Maintainer"
+        }
+    ],
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/commerce_maib",
+        "source": "http://cgit.drupalcode.org/commerce_maib"
+    },
+    "license": "GPL-2.0-or-later",
+    "minimum-stability": "dev",
+    "require": {
+        "drupal/commerce": "^2.0",
+        "maib/maibapi": "^2.0"
+    },
+    "repositories": {
+        "drupal": {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        },
+        "maib": {
+            "type": "composer",
+            "url": "https://packagist.org/packages/"
+        }
+    }
+}

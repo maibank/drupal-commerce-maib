@@ -1,0 +1,9 @@
+name: Commerce MAIB
+type: module
+description: Provides Commerce integration for the MAIB Gateway.
+core: 8.x
+core_version_requirement: ^8 || ^9
+package: Commerce (contrib)
+dependencies:
+  - commerce:commerce_payment
+

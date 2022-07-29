@@ -1,0 +1,15 @@
+commerce_payment.commerce_payment_gateway.plugin.maib_redirect:
+  type: commerce_payment_gateway_configuration
+  mapping:
+    private_key_path:
+      type: string
+      label: 'Private key'
+    private_key_password:
+      type: string
+      label: 'Private key password'
+    public_key_path:
+      type: string
+      label: 'Public key'
+    intent:
+      type: string
+      label: 'Intent'

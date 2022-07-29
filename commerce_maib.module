@@ -1,0 +1,95 @@
+<?php
+
+/**
+ * @file
+ * Provides maintenance for MAIB transactions.
+ */
+
+use Drupal\commerce_maib\MAIBGateway;
+use Drupal\Component\Serialization\Json;
+use Drupal\commerce_payment\Entity\PaymentGateway;
+
+/**
+ * Implements hook_cron().
+ */
+function commerce_maib_cron() {
+  $maib_payment_gateway_ids = commerce_maib_get_all_gateway_ids();
+  if (!count($maib_payment_gateway_ids)) {
+    // Nothing left to do.
+    return;
+  }
+
+  // Close business day after midnight.
+  $today = date('Ymd');
+  $closed_date = \Drupal::state()->get('commerce_maib.last_closed_day', 0);
+
+  if ($today !== $closed_date) {
+    foreach ($maib_payment_gateway_ids as $gateway_id) {
+      try {
+        $maib_payment_gateway = PaymentGateway::load($gateway_id);
+        $maib_client = $maib_payment_gateway ? $maib_payment_gateway->getPlugin()->getClient() : NULL;
+
+        $result = $maib_client ? $maib_client->closeDay() : NULL;
+        if (isset($result[MAIBGateway::MAIB_RESULT]) && $result[MAIBGateway::MAIB_RESULT] == MAIBGateway::MAIB_RESULT_OK) {
+          \Drupal::logger('commerce_maib')->notice('Business day closed. Data: @data.', [
+            '@data' => Json::encode($result)
+          ]);
+        }
+        else {
+          \Drupal::logger('commerce_maib')->error('Failed to close business day. Data: @data.', [
+            '@data' => Json::encode($result)
+          ]);
+        }
+      }
+      catch (\Exception $e) {
+        \Drupal::logger('commerce_maib')->error('Failed to close business day. Error: @error.', [
+          '@error' => $e->getMessage()
+        ]);
+      }
+    }
+    // Avoid repeating calls, even if failed.
+    \Drupal::state()->set('commerce_maib.last_closed_day', $today);
+  }
+  // Get payments id with new and authorization state.
+  $payment_storage_query = \Drupal::entityTypeManager()->getStorage('commerce_payment')->getQuery();
+  $state_group = $payment_storage_query->orConditionGroup()
+    ->condition('state', 'new')
+    ->condition('state', 'authorization');
+  $payment_ids = $payment_storage_query
+    ->condition($state_group)
+    ->condition('payment_gateway', $maib_payment_gateway_ids, 'IN')
+    ->execute();
+  // Check for stalled payment transactions and try to update theirs status.
+  $queue = \Drupal::queue('commerce_maib_queue');
+  foreach ($payment_ids as $payment_id) {
+    $queue->createItem($payment_id);
+  }
+}
+
+/**
+ * Detect all gateways created based on MAIB.
+ *
+ * @return array
+ *   Returns all MAIB based payment gateway ids.
+ *
+ * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+ *   Thrown if the entity type doesn't exist.
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ *   Thrown if the storage handler couldn't be loaded.
+ */
+function commerce_maib_get_all_gateway_ids() {
+  static $ids = NULL;
+
+  if (!isset($ids)) {
+    $ids = [];
+    /** @var \Drupal\commerce_payment\PaymentGatewayStorageInterface $payment_gateway_storage */
+    $payment_gateway_storage = \Drupal::entityTypeManager()->getStorage('commerce_payment_gateway');
+    $maib_gateways = $payment_gateway_storage->loadByProperties(['plugin' => MAIBGateway::MAIB_PLUGIN_ID]);
+
+    foreach ($maib_gateways as $gateway) {
+      $ids[] = $gateway->id();
+    }
+  }
+
+  return $ids;
+}
