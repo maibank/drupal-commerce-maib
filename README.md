@@ -3,6 +3,8 @@ INTRODUCTION
 
 This module provides the integration of the Moldova Agroindbank Payment Gateway to the eCommerce.
 
+To download the module and access more info go to https://www.drupal.org/project/commerce_maib
+
 REQUIREMENTS
 ------------
 
@@ -36,6 +38,13 @@ After installation, add a new payment Gateway on admin/commerce/config/payment-g
     8. Set up the conditions you want.
     9. Set the Status to Enabled
     10. Save the configuration form.
+
+CRON & CLOSING OF BUSINESS DAY 
+------------------------------
+
+Bussines day is closed automatically by cron jobs. 
+
+Please make sure drupal cron is setup correctly and is run at least once every day, preferable around midnight. 
 
 USAGE
 -----
