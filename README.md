@@ -1,22 +1,25 @@
 INTRODUCTION
 ------------
 
-This module provides the integration of the Moldova Agroindbank Payment Gateway to the eCommerce.
+This module provides the integration of the **maib** Payment Gateway with Drupal Commerce.
 
 To download the module and access more info go to https://www.drupal.org/project/commerce_maib
+
+Guide with images: https://www.drupal.org/docs/commerce-maib-guide/commerce-maib-documentation
 
 REQUIREMENTS
 ------------
 
 Commerce module: https://www.drupal.org/project/commerce
+
 Maib Library: https://packagist.org/packages/maib/maibapi
 
 INSTALLATION
 ------------
 
- * Install as you would typically install a contributed Drupal module. Visit
-   https://www.drupal.org/docs/8/extending-drupal-8/installing-drupal-8-modules
-   for further information.
+ * Install as you would typically install a contributed Drupal module. 
+
+Visit https://www.drupal.org/docs/extending-drupal/installing-modules for further information.
 
 CONFIGURATION
 -------------
