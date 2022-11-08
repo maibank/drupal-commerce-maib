@@ -9,8 +9,9 @@ Installation guide with images: https://www.drupal.org/docs/commerce-maib-guide/
 
 REQUIREMENTS
 ------------
+PHP >= 8.1
 
-Commerce module: https://www.drupal.org/project/commerce
+Commerce module v.2: https://www.drupal.org/project/commerce
 
 Maib Library: https://packagist.org/packages/maib/maibapi
 
