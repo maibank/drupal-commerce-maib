@@ -5,7 +5,7 @@ This module provides the integration of the **maib** Payment Gateway with Drupal
 
 To download the module and access more info go to https://www.drupal.org/project/commerce_maib
 
-Guide with images: https://www.drupal.org/docs/commerce-maib-guide/commerce-maib-documentation
+Installation guide with images: https://www.drupal.org/docs/commerce-maib-guide/commerce-maib-documentation
 
 REQUIREMENTS
 ------------
