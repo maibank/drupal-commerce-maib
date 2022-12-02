@@ -82,3 +82,11 @@ Use openssl to extract keys from PFX file and password provided by bank
 
 3. Upload these to the server folder.
 4. Change the paths to a new certificate and key.
+
+MAINTAINERS
+===========
+
+Current maintainers:
+
+ * [Constantin](https://github.com/kostealupu)
+ * [Indrivo](https://github.com/indrivo)
