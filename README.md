@@ -10,6 +10,8 @@ Installation guide with images: https://www.drupal.org/docs/commerce-maib-guide/
 REQUIREMENTS
 ------------
 
+Drupal: v.8 || v.9
+
 Commerce module v.2: https://www.drupal.org/project/commerce
 
 Maib Library: https://packagist.org/packages/maib/maibapi
